@@ -20,7 +20,7 @@ const UserHealthCondition = sequelize.define('UserHealthCondition', {
     idHealthCondition: {
         type: DataTypes.INTEGER,
         references: {
-            model: HealthCondition,
+            model: HealthCondition, 
             key: 'idHealthCondition'
         }, 
         allowNull: true // Permitir null si se usa `otherConditionDescription`
