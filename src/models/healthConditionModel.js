@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../models/index'); // Ajusta la ruta si es necesario
+const sequelize = require('./index'); // Ajusta la ruta si es necesario
 
-const HealthCondition = sequelize.define('healthCondition', {
+const HealthCondition = sequelize.define('HealthCondition', {
     idHealthCondition: {
         type: DataTypes.INTEGER,
         primaryKey: true,

@@ -10,7 +10,8 @@ router.get('/profile', verifyToken, authMiddleware, userControllers.getUserProfi
 
 // Ruta para obtener usuarios con paginación
 router.get('/', isAdmin, verifyToken, authMiddleware, userControllers.getUsersWithPagination);
-
+//check email
+router.get("/check-email", userControllers.checkEmailExists);
 //Registrar usuario
 router.post("/register", userControllers.createUser);
 

@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const mysql = require('mysql2');
 require('dotenv').config();
-
+//tasklist | findstr node    <==  Sirve para ver los procesos que hay de node puede generear conflict si se quedan varios abiertos
 const app = express();
 const port = 3001;
 
@@ -43,7 +43,8 @@ const mercadoPagoRoutes = require('./routes/mercadoPagoRoutes');
 const sessionRouter = require('./routes/authRoutes'); // Rutas de autenticación
 const priceRouter = require('./routes/price')
 const scheduleRouter = require('./routes/schedule');
-const healthCondition = require('./models/healthConditionModel');
+const healthCondition = require('./routes/healthConditions');
+const passwordRecoveryRouter = require('./routes/passwordRecovery');
 
 
 app.use('/users', usersRouter);
@@ -56,7 +57,8 @@ app.use('/session', sessionRouter);
 app.use('/prices', priceRouter)
 app.use('/schedules', scheduleRouter)
 app.use('/mercadopago', mercadoPagoRoutes);
-app.use('health-conditions', healthCondition)
+app.use('/health-conditions', healthCondition)
+app.use('/password-recovery', passwordRecoveryRouter);
 
 // Iniciar el servidor
 app.listen(port, () => {

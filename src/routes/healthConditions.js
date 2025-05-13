@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { createHealthConditions } = require("../controllers/healthConditionsControllers");
+const { healthConditionsControllers } = require("../controllers/healthConditionsControllers");
 
-router.post("/", createHealthConditions);
+router.post("/", healthConditionsControllers.createHealthConditions);
 
 module.exports = router;

@@ -24,7 +24,8 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
     },
     birthDate: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        allowNull: false
     },
     profilePicture: {
         type: DataTypes.STRING
@@ -43,7 +44,16 @@ const User = sequelize.define('User', {
             model: UserRol,
             key: 'idUserRol'
         }
-    }
+    },
+    recoveryCode: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    recoveryExpires: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+
 }, {
     tableName: 'users',
     timestamps: false

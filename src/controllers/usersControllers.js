@@ -35,22 +35,43 @@ const getUsersWithPagination = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+    console.log("datos recibidos en el backend", req.body);
+
     try {
         const newUser = await userQueries.createUser(req.body);
 
         if (newUser.error) {
-            // Se envía el mensaje de error indicando que el correo ya está registrado
             return res.status(400).json({ message: newUser.error });
         }
 
-        res.status(201).json({ message: "Usuario creado exitosamente", user: newUser });
+        res.status(201).json({ message: "Usuario creado exitosamente", user: newUser.idUser });
+
     } catch (error) {
         console.error("Error en el controlador al crear el usuario:", error);
         res.status(500).json({ message: "Error al crear el usuario" });
     }
 };
 
+//check email
+const checkEmailExists = async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        // Llamamos a la consulta de la base de datos
+        const user = await userQueries.checkEmailExists(email);
+
+        if (user) {
+            return res.status(400).json({ message: "El correo ya está registrado" });
+        }
+
+        res.status(200).json({ message: "El correo está disponible" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Error al verificar el correo" });
+    }
+};
+
 const userControllers = {
+    checkEmailExists,
     getUsersWithPagination,
     getUserProfile,
     createUser

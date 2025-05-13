@@ -1,5 +1,5 @@
-/*const { DataTypes } = require('sequelize');
-const sequelize = require('../models/index'); // Ajusta la ruta si es necesario
+const { DataTypes } = require('sequelize');
+const sequelize = require('./index'); // Ajusta la ruta si es necesario
 const HealthCondition = require('./healthConditionModel');
 const User = require('./userModel');
 
@@ -20,11 +20,11 @@ const UserHealthCondition = sequelize.define('UserHealthCondition', {
     idHealthCondition: {
         type: DataTypes.INTEGER,
         references: {
-            model: HealthCondition, 
+            model: HealthCondition,
             key: 'idHealthCondition'
-        }, 
+        },
         allowNull: true // Permitir null si se usa `otherConditionDescription`
-    }, 
+    },
     otherConditionDescription: {
         type: DataTypes.TEXT,
         allowNull: true // Este campo solo se llena si idHealthCondition es null
@@ -41,10 +41,10 @@ UserHealthCondition.belongsTo(User, { foreignKey: 'idUser' });
 HealthCondition.hasMany(UserHealthCondition, { foreignKey: 'idHealthCondition' });
 UserHealthCondition.belongsTo(HealthCondition, { foreignKey: 'idHealthCondition' });
 
-module.exports = UserHealthCondition;*/
-
+module.exports = UserHealthCondition;
+/*
 const { DataTypes } = require('sequelize');
-const sequelize = require('../models/index');
+const sequelize = require('../models/index')
 const HealthCondition = require('./healthConditionModel');
 const User = require('./userModel');
 
@@ -94,3 +94,4 @@ HealthCondition.hasMany(UserHealthCondition, { foreignKey: 'idHealthCondition', 
 UserHealthCondition.belongsTo(HealthCondition, { foreignKey: 'idHealthCondition' });
 
 module.exports = UserHealthCondition;
+*/

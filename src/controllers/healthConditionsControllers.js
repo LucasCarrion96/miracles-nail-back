@@ -1,32 +1,44 @@
-const UserHealthCondition = require("../models/userHealthCondition");
-const sequelize = require("../config/database");
+const UserHealthCondition = require("../models/userHealthConditionModel");
+
 
 const createHealthConditions = async (req, res) => {
-    const transaction = await sequelize.transaction();
-    try {
-        const { userId, healthConditions } = req.body;
+    const { userId, healthConditions, otherHealthCondition } = req.body;
 
-        if (!userId || !healthConditions || healthConditions.length === 0) {
-            return res.status(400).json({ message: "Datos insuficientes" });
+    try {
+        const userHealthConditions = [];
+
+        // Registrar las condiciones de salud seleccionadas
+        for (const conditionId of healthConditions) {
+            userHealthConditions.push({
+                idUser: userId,
+                idHealthCondition: conditionId, // El id de la condición de salud seleccionada
+                otherConditionDescription: null // No es necesario agregar descripción si es una condición predefinida
+            });
         }
 
-        const healthData = healthConditions.map(condition => ({
-            idUser: userId,
-            idHealthCondition: condition.id,
-            otherConditionDescription: condition.id === 1 ? condition.description : null
-        }));
+        // Si se seleccionó 'otra condición de salud', añadirla con la descripción
+        if (otherHealthCondition) {
+            userHealthConditions.push({
+                idUser: userId,
+                idHealthCondition: 1, // Asumo que '1' es el id para "otra condición"
+                otherConditionDescription: otherHealthCondition
+            });
+        }
 
-        await UserHealthCondition.bulkCreate(healthData, { transaction });
+        // 4️⃣ Guardar las condiciones de salud del usuario
+        await UserHealthCondition.bulkCreate(userHealthConditions);
 
-        await transaction.commit();
-        res.status(201).json({ message: "Condiciones de salud registradas con éxito" });
-
-    } catch (error) {
-        await transaction.rollback();
-        res.status(500).json({ message: "Error al registrar condiciones de salud", error: error.message });
+        return res.status(200).json({ message: 'Condiciones de salud registradas correctamente.' });
+    } catch (err) {
+        console.error("Error al guardar las condiciones de salud:", err);
+        return res.status(500).json({ message: 'Error al guardar las condiciones de salud. Inténtalo de nuevo.' });
     }
 };
 
-module.exports = {
+const healthConditionsControllers = {
     createHealthConditions
+}
+
+module.exports = {
+    healthConditionsControllers
 };
