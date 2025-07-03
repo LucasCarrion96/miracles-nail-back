@@ -45,13 +45,14 @@ const getUserProfile = async (id) => {
             include: [
                 {
                     model: Service,
-                    attributes: ['nameService'],
+                    attributes: ['nameService', "price"],
                 },
                 {
                     model: Service, // Relación con el servicio adicional
                     as: 'AdditionalService', // Alias para diferenciarlo
                     foreignKey: 'idServiceAdd', // La clave foránea en Turns
-                    attributes: ['nameService'], // El nombre del servicio adicional
+                    attributes: ['nameService', "price"], // El nombre del servicio adicional
+
                 }
 
             ]

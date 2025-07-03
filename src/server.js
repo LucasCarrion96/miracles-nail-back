@@ -44,7 +44,7 @@ const sessionRouter = require('./routes/authRoutes'); // Rutas de autenticación
 const priceRouter = require('./routes/price')
 const scheduleRouter = require('./routes/schedule');
 const healthCondition = require('./routes/healthConditions');
-const passwordRecoveryRouter = require('./routes/passwordRecovery');
+const passwordRecovery = require('./routes/passwordRecovery');
 
 
 app.use('/users', usersRouter);
@@ -58,7 +58,7 @@ app.use('/prices', priceRouter)
 app.use('/schedules', scheduleRouter)
 app.use('/mercadopago', mercadoPagoRoutes);
 app.use('/health-conditions', healthCondition)
-app.use('/password-recovery', passwordRecoveryRouter);
+app.use('/password-recovery', passwordRecovery);
 
 // Iniciar el servidor
 app.listen(port, () => {

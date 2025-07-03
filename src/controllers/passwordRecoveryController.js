@@ -3,8 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/userModel');
-
-
+const transporter = require('../config/mailer');
 
 
 
@@ -22,26 +21,14 @@ const sendRecoveryCode = async (req, res) => {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
-        // Generar código de 6 dígitos
         const code = Math.floor(100000 + Math.random() * 900000).toString();
-        const expires = new Date(Date.now() + 10 * 60 * 1000); // Expira en 10 minutos
+        const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutos
 
-        // Guardar en DB
         await user.update({
             recoveryCode: code,
             recoveryExpires: expires,
         });
 
-        // Configurar nodemailer
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.MAIL_USER, // poné tu correo
-                pass: process.env.MAIL_PASS, // o tu app password
-            },
-        });
-
-        // Enviar correo
         await transporter.sendMail({
             from: process.env.MAIL_USER,
             to: mail,

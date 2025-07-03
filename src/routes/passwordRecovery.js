@@ -8,7 +8,7 @@ router.post('/recover', passwordRecoveryController.sendRecoveryCode);
 // Verificar código
 router.post('/recover/verify', passwordRecoveryController.verifyRecoveryCode);
 
-// Resetear contraseña
+// Resetear contraseña 
 router.post('/recover/reset', passwordRecoveryController.resetPassword);
 
 module.exports = router;
