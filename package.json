@@ -1,10 +1,12 @@
 {
   "name": "miracles-studio-back",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon ./src/server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src --exec vite-node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -29,5 +31,9 @@
     "nodemon": "^3.1.4",
     "sequelize": "^6.37.3",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.3",
+    "vite-node": "^3.2.4"
   }
 }

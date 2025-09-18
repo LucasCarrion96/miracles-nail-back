@@ -1,9 +1,13 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const mysql = require('mysql2');
-require('dotenv').config();
+
+
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
+// Cargar variables de entorno
+dotenv.config();
 //tasklist | findstr node    <==  Sirve para ver los procesos que hay de node puede generear conflict si se quedan varios abiertos
 const app = express();
 const port = 3001;
@@ -33,33 +37,18 @@ const dbOptions = {
 const connection = mysql.createPool(dbOptions);
 
 // Rutas
-const usersRouter = require('./routes/users');
-const servicesRouter = require('./routes/services');
-const coursesRouter = require('./routes/courses');
-const userCoursesRouter = require('./routes/userCourses');
-const turnsRouter = require('./routes/turns');
-const artTypeRouter = require('./routes/artType');
-const mercadoPagoRoutes = require('./routes/mercadoPagoRoutes');
-const sessionRouter = require('./routes/authRoutes'); // Rutas de autenticación
-const priceRouter = require('./routes/price')
-const scheduleRouter = require('./routes/schedule');
-const healthCondition = require('./routes/healthConditions');
-const passwordRecovery = require('./routes/passwordRecovery');
+import catalogsRoutes from '@catalogsRoutes';
+import userRoutes from '@userRoutes';
+import servicesRoutes from '@servicesRoutes';
+import authRoutes from '@authRoutes';
+import mercadoPagoRoutes from "./modules/mercado-pago/routes/mercadoPagoRoutes.js";
+//-------------------------------//
 
-
-app.use('/users', usersRouter);
-app.use('/services', servicesRouter);
-app.use('/courses', coursesRouter);
-app.use('/user_courses', userCoursesRouter);
-app.use('/turns', turnsRouter);
-app.use('/artTypes', artTypeRouter);
-app.use('/session', sessionRouter);
-app.use('/prices', priceRouter)
-app.use('/schedules', scheduleRouter)
+app.use('/catalog', catalogsRoutes);
+app.use('/users', userRoutes);
+app.use('/services', servicesRoutes);
+app.use('/auth', authRoutes);
 app.use('/mercadopago', mercadoPagoRoutes);
-app.use('/health-conditions', healthCondition)
-app.use('/password-recovery', passwordRecovery);
-
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Servidor Node.js en funcionamiento en http://localhost:${port}`);

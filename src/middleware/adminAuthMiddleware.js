@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userModel'); // Modelo de usuario
-const UserRol = require('../models/userRolModel'); // Modelo de roles
+import jwt from 'jsonwebtoken';
+import { User, UserRol } from "@models"
 
 // Middleware para verificar si el usuario es administrador
 const isAdmin = async (req, res, next) => {
@@ -45,4 +44,4 @@ const isAdmin = async (req, res, next) => {
     }
 };
 
-module.exports = isAdmin;
+export default isAdmin;

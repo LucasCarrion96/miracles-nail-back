@@ -1,6 +1,10 @@
-const nodemailer = require('nodemailer');
-require('dotenv').config(); // Asegurate de tener esto para cargar el .env
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
+// Cargar variables de entorno
+dotenv.config();
+
+// Configurar el transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -9,4 +13,5 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-module.exports = transporter;
+// Exportación ESM
+export default transporter;
